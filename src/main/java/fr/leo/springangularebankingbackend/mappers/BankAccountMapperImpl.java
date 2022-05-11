@@ -17,7 +17,7 @@ public class BankAccountMapperImpl {
 		//customerDTO.setId(customer.getId());
 		//customerDTO.setEmail(customer.getEmail());
 		//customerDTO.setName(customer.getName());
-		// Autre solution : framework "MapStruct", "JMapper" !
+		// Autre solution : frameworks "MapStruct", "JMapper" !
 		// Ce code, c'est du code technique, et donc on utilise des frameworks 
 		//  qui permettent de génerer ce code !
 		return customerDTO;

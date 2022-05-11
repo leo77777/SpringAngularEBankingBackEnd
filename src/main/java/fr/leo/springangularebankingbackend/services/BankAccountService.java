@@ -2,6 +2,7 @@ package fr.leo.springangularebankingbackend.services;
 
 import java.util.List;
 
+import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
 import fr.leo.springangularebankingbackend.entities.BankAccount;
 import fr.leo.springangularebankingbackend.entities.CurrentAccount;
 import fr.leo.springangularebankingbackend.entities.Customer;
@@ -15,10 +16,11 @@ public interface BankAccountService {
 	Customer saveCustomer( Customer customer );
 	CurrentAccount saveCurrentBankAccount( double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
 	SavingAccount saveSavingBankAccount( double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
-	List<Customer> listCustomers();
+	List<CustomerDTO> listCustomers();
 	BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
 	void debit(String accountI, double amount,String description ) throws BankAccountNotFoundException, BalanceNotSuficientException;
 	void credit(String accountI, double amount,String description ) throws BankAccountNotFoundException;
 	void transfert(String AccountIdSource, String AccountIdDestination, double amount ) throws BankAccountNotFoundException, BalanceNotSuficientException;
 	List<BankAccount> bankAccountList();
+	CustomerDTO getCustomer(Long idCustomer) throws CustomerNotFoundException;
 }

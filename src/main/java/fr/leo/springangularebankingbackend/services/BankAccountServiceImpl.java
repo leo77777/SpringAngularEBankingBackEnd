@@ -1,12 +1,15 @@
 package fr.leo.springangularebankingbackend.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
 import fr.leo.springangularebankingbackend.entities.AccountOperation;
 import fr.leo.springangularebankingbackend.entities.BankAccount;
 import fr.leo.springangularebankingbackend.entities.CurrentAccount;
@@ -16,6 +19,7 @@ import fr.leo.springangularebankingbackend.enums.EnumOperationType;
 import fr.leo.springangularebankingbackend.exceptions.BalanceNotSuficientException;
 import fr.leo.springangularebankingbackend.exceptions.BankAccountNotFoundException;
 import fr.leo.springangularebankingbackend.exceptions.CustomerNotFoundException;
+import fr.leo.springangularebankingbackend.mappers.BankAccountMapperImpl;
 import fr.leo.springangularebankingbackend.repositories.AccountOperationRepository;
 import fr.leo.springangularebankingbackend.repositories.BankAccountRepository;
 import fr.leo.springangularebankingbackend.repositories.CustomerRepository;
@@ -39,6 +43,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 	private CustomerRepository customerRepository;
 	private BankAccountRepository bankAccountRepository;
 	private AccountOperationRepository accountOperationRepository;	
+	private BankAccountMapperImpl dtoMapper;
 	
 	// Ci dessous, déjà créer par Lombok !
 	//Logger log=LoggerFactory.getLogger(this.getClass().getName());
@@ -85,8 +90,20 @@ public class BankAccountServiceImpl implements BankAccountService {
 	}
 
 	@Override
-	public List<Customer> listCustomers() {		
-		return customerRepository.findAll();
+	public List<CustomerDTO> listCustomers() {
+		List<Customer> customers =  customerRepository.findAll();		
+		// Programmation fonctionnelle !
+		List<CustomerDTO> customerDTOs = customers.stream().map(cust->dtoMapper
+				.fromCustomer(cust))			
+				.collect(Collectors
+				.toList());		
+		/* Programmation impérative <=> classique
+		List<CustomerDTO> customerDTOs = new ArrayList<>();
+		for (Customer customer : customers) {
+			CustomerDTO customerDTO = dtoMapper.fromCustomer(customer);
+			customerDTOs.add(customerDTO);
+		}*/
+		return customerDTOs;
 	}
 
 	@Override
@@ -135,5 +152,13 @@ public class BankAccountServiceImpl implements BankAccountService {
 	@Override
 	public List<BankAccount> bankAccountList(){
 		return bankAccountRepository.findAll();
+	}
+	
+	@Override
+	public CustomerDTO getCustomer(Long idCustomer) throws CustomerNotFoundException{
+		Customer customer =  customerRepository
+				.findById(idCustomer)
+				.orElseThrow(()-> new CustomerNotFoundException("Customer introuvable !") );
+		return dtoMapper.fromCustomer(customer);
 	}
 }

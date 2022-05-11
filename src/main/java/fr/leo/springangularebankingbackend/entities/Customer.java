@@ -25,6 +25,7 @@ public class Customer {
 	private String email;
 	
 	@OneToMany(mappedBy = "customer")
-	@JsonProperty(access = Access.WRITE_ONLY) // Eviter les dépendances cycliques
+	// Ci dessous peut être supprimé du fait de l'utilisation des Dtos !
+	// @JsonProperty(access = Access.WRITE_ONLY) // Eviter les dépendances cycliques
 	private List<BankAccount> bankAccounts;
 }
