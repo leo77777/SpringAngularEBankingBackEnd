@@ -89,7 +89,8 @@ public class SpringAngularEBankingBackEndApplication {
 			};
 	}
 	
-	@Bean
+	// CREATION DES DONNEES: COUCHE SERVICE
+	// @Bean
 	CommandLineRunner start(BankAccountService  bankAccountService) {
 		return args->{	
 			Stream.of("Joe2","Averel2","Rantanplan2").forEach(name->{
