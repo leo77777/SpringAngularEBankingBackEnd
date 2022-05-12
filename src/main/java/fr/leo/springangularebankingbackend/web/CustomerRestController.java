@@ -2,9 +2,11 @@ package fr.leo.springangularebankingbackend.web;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,4 +38,15 @@ public class CustomerRestController {
 		return bankAccountService.saveCustomer(customerDTO);
 	}
 
+	@PutMapping("/customers/{customerId}")
+	public CustomerDTO updateCustomer(@PathVariable Long customerId,
+									  @RequestBody CustomerDTO customerDTO){
+			customerDTO.setId(customerId);
+			return bankAccountService.updateCustomer(customerDTO);
+	}
+	
+	@DeleteMapping("customers/{Id}")
+	public void deleteCustomer(@PathVariable Long Id) {
+		bankAccountService.deleteCustomer(Id);
+	}
 }
