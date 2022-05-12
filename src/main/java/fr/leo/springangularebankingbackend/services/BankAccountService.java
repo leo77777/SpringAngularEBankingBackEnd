@@ -11,9 +11,8 @@ import fr.leo.springangularebankingbackend.exceptions.BalanceNotSuficientExcepti
 import fr.leo.springangularebankingbackend.exceptions.BankAccountNotFoundException;
 import fr.leo.springangularebankingbackend.exceptions.CustomerNotFoundException;
 
-public interface BankAccountService {
-	
-	Customer saveCustomer( Customer customer );
+public interface BankAccountService {	
+
 	CurrentAccount saveCurrentBankAccount( double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
 	SavingAccount saveSavingBankAccount( double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
 	List<CustomerDTO> listCustomers();
@@ -23,4 +22,6 @@ public interface BankAccountService {
 	void transfert(String AccountIdSource, String AccountIdDestination, double amount ) throws BankAccountNotFoundException, BalanceNotSuficientException;
 	List<BankAccount> bankAccountList();
 	CustomerDTO getCustomer(Long idCustomer) throws CustomerNotFoundException;
+	CustomerDTO saveCustomer(CustomerDTO customerDto);
+	//Customer saveCustomer(Customer customer);
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
 import fr.leo.springangularebankingbackend.entities.AccountOperation;
 import fr.leo.springangularebankingbackend.entities.BankAccount;
 import fr.leo.springangularebankingbackend.entities.CurrentAccount;
@@ -94,8 +95,10 @@ public class SpringAngularEBankingBackEndApplication {
 	CommandLineRunner start(BankAccountService  bankAccountService) {
 		return args->{	
 			Stream.of("Joe2","Averel2","Rantanplan2").forEach(name->{
-				Customer customer = new Customer(null, name, name+"@free.fr", null);
-				bankAccountService.saveCustomer(customer);
+				CustomerDTO customerDto = new CustomerDTO();
+				customerDto.setName(name);
+				customerDto.setEmail( name+"@free.fr");
+				bankAccountService.saveCustomer(customerDto);
 			});
 			
 			bankAccountService.listCustomers().forEach(customer->{

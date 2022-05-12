@@ -15,9 +15,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import fr.leo.springangularebankingbackend.enums.EnumAccountStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;

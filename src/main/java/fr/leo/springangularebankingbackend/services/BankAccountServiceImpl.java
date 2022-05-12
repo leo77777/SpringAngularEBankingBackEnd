@@ -1,6 +1,5 @@
 package fr.leo.springangularebankingbackend.services;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -48,11 +47,13 @@ public class BankAccountServiceImpl implements BankAccountService {
 	// Ci dessous, déjà créer par Lombok !
 	//Logger log=LoggerFactory.getLogger(this.getClass().getName());
 
+
 	@Override
-	public Customer saveCustomer(Customer customer) {
-		log.info("Saving new customer ...");
+	public CustomerDTO saveCustomer(CustomerDTO customerDto) {
+		log.info("Saving new customerDto ...");
+		Customer customer = dtoMapper.fromCustomerDTO(customerDto);
 		Customer savedCustomer =  customerRepository.save(customer);
-		return savedCustomer;
+		return dtoMapper.fromCustomer(savedCustomer) ;
 	}
 	
 	@Override
@@ -161,4 +162,11 @@ public class BankAccountServiceImpl implements BankAccountService {
 				.orElseThrow(()-> new CustomerNotFoundException("Customer introuvable !") );
 		return dtoMapper.fromCustomer(customer);
 	}
+
+//	@Override
+//	public Customer saveCustomer(Customer customer) {
+//		log.info("Saving new customer ...");
+//		Customer savedCustomer =  customerRepository.save(customer);
+//		return customer;
+//	}
 }
