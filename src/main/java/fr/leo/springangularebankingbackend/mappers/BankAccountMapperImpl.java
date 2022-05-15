@@ -3,8 +3,12 @@ package fr.leo.springangularebankingbackend.mappers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
+import fr.leo.springangularebankingbackend.dtos.SavingBankAccountDto;
+import fr.leo.springangularebankingbackend.entities.CurrentAccount;
 import fr.leo.springangularebankingbackend.entities.Customer;
+import fr.leo.springangularebankingbackend.entities.SavingAccount;
 
 @Service
 public class BankAccountMapperImpl {
@@ -34,4 +38,34 @@ public class BankAccountMapperImpl {
 		// Autre solution : framework "MapStruct", "JMapper" !
 		return customer;	
 	}
+	
+	public SavingBankAccountDto fromSavingAccount(SavingAccount savingAccount) {
+		SavingBankAccountDto savingBankAccountDto = new SavingBankAccountDto();
+		BeanUtils.copyProperties(savingAccount, savingBankAccountDto);		
+		savingBankAccountDto.setCustomerDTO(fromCustomer(savingAccount.getCustomer()));
+		return savingBankAccountDto;
+	}
+	
+	public SavingAccount fromSavingBankAccountDto(SavingBankAccountDto savingBankAccountDto) {
+		SavingAccount savingAccount = new SavingAccount();
+		BeanUtils.copyProperties(savingBankAccountDto ,savingAccount );
+		savingAccount.setCustomer(fromCustomerDTO(savingBankAccountDto.getCustomerDTO()));
+		return savingAccount;
+	}
+	
+	public CurrentBankAccountDto fromCurrentAccount(CurrentAccount currentAccount) {
+		CurrentBankAccountDto currentBankAccountDto = new CurrentBankAccountDto();
+		BeanUtils.copyProperties(currentAccount, currentBankAccountDto);
+		currentBankAccountDto.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
+		return currentBankAccountDto;
+	}
+	
+	public CurrentAccount fromCurrentBankAccountDto(CurrentBankAccountDto currentBankAccountDto ) {
+		CurrentAccount currentAccount = new CurrentAccount();
+		BeanUtils.copyProperties(currentBankAccountDto ,currentAccount );
+		currentAccount.setCustomer(fromCustomerDTO(currentBankAccountDto.getCustomerDTO()));
+		return currentAccount;
+	}
 }
+
+

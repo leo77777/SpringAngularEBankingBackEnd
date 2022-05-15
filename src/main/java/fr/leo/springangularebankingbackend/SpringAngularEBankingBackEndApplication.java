@@ -11,7 +11,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fr.leo.springangularebankingbackend.dtos.BankAccountDto;
+import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
+import fr.leo.springangularebankingbackend.dtos.SavingBankAccountDto;
 import fr.leo.springangularebankingbackend.entities.AccountOperation;
 import fr.leo.springangularebankingbackend.entities.BankAccount;
 import fr.leo.springangularebankingbackend.entities.CurrentAccount;
@@ -125,12 +128,20 @@ public class SpringAngularEBankingBackEndApplication {
 //						}
 //					});
 					
-					List<BankAccount> bankAccounts = bankAccountService.bankAccountList(); 
-					for(BankAccount bankAccount : bankAccounts) {
-						bankAccountService.credit(bankAccount.getId() ,
-								10000 + Math.random()*120000, "Credit");
-						bankAccountService.debit(bankAccount.getId() ,
-								1000 + Math.random()*12000, "Debit");
+					List<BankAccountDto> bankAccounts = bankAccountService.bankAccountList(); 
+					for(BankAccountDto bankAccount : bankAccounts) {
+						for (int i = 0; i < 10; i++) {
+							String accountId;
+							if (bankAccount instanceof SavingBankAccountDto) {
+								accountId = ((SavingBankAccountDto) bankAccount).getId();
+							}else {
+								accountId = ((CurrentBankAccountDto) bankAccount).getId();
+							}
+							bankAccountService.credit(accountId ,
+									10000 + Math.random()*120000, "Credit");
+							bankAccountService.debit(accountId ,
+									1000 + Math.random()*12000, "Debit");
+						}
 					}
 				} catch (CustomerNotFoundException e) {
 					e.printStackTrace();

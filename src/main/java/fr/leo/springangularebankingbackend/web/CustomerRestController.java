@@ -45,7 +45,7 @@ public class CustomerRestController {
 			return bankAccountService.updateCustomer(customerDTO);
 	}
 	
-	@DeleteMapping("customers/{Id}")
+	@DeleteMapping("/customers/{Id}")
 	public void deleteCustomer(@PathVariable Long Id) {
 		bankAccountService.deleteCustomer(Id);
 	}
