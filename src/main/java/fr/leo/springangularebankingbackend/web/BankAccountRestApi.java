@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.leo.springangularebankingbackend.dtos.AccountOperationDTO;
 import fr.leo.springangularebankingbackend.dtos.BankAccountDto;
 import fr.leo.springangularebankingbackend.exceptions.BankAccountNotFoundException;
 import fr.leo.springangularebankingbackend.services.BankAccountService;
@@ -25,6 +26,11 @@ public class BankAccountRestApi {
 	@GetMapping("/accounts")
 	public List<BankAccountDto> listAccounts(){
 		return bankAccountService.bankAccountList();
+	}
+	
+	@GetMapping("/accounts/{accountId}/operations")
+	public List<AccountOperationDTO> getHistory(@PathVariable String accountId){
+		return bankAccountService.accountHistory(accountId);
 	}
 	
 

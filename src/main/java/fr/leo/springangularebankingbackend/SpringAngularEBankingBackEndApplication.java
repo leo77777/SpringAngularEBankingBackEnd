@@ -29,6 +29,7 @@ import fr.leo.springangularebankingbackend.repositories.AccountOperationReposito
 import fr.leo.springangularebankingbackend.repositories.BankAccountRepository;
 import fr.leo.springangularebankingbackend.repositories.CustomerRepository;
 import fr.leo.springangularebankingbackend.services.BankAccountService;
+import fr.leo.springangularebankingbackend.services.BankAccountServiceImpl;
 import fr.leo.springangularebankingbackend.services.BankService;
 
 @SpringBootApplication
@@ -114,6 +115,7 @@ public class SpringAngularEBankingBackEndApplication {
 								Math.random()*100000,
 								5.5,
 								customer.getId());
+					
 //					bankAccountService.bankAccountList().forEach((account)->{
 //						for (int i = 0; i < 10; i++) {
 //							// On est obligé de faire un Try/Catch, car on est à l'intérieur
@@ -126,31 +128,27 @@ public class SpringAngularEBankingBackEndApplication {
 //								e.printStackTrace();
 //							}							
 //						}
-//					});
-					
-					List<BankAccountDto> bankAccounts = bankAccountService.bankAccountList(); 
-					for(BankAccountDto bankAccount : bankAccounts) {
-						for (int i = 0; i < 10; i++) {
-							String accountId;
-							if (bankAccount instanceof SavingBankAccountDto) {
-								accountId = ((SavingBankAccountDto) bankAccount).getId();
-							}else {
-								accountId = ((CurrentBankAccountDto) bankAccount).getId();
-							}
-							bankAccountService.credit(accountId ,
-									10000 + Math.random()*120000, "Credit");
-							bankAccountService.debit(accountId ,
-									1000 + Math.random()*12000, "Debit");
-						}
-					}
+//					});		
 				} catch (CustomerNotFoundException e) {
 					e.printStackTrace();
-				} catch (BankAccountNotFoundException e) {
-					e.printStackTrace();
-				} catch (BalanceNotSuficientException e) {
-					e.printStackTrace();
-				}
+				} 
 			});
+			
+			List<BankAccountDto> bankAccounts = bankAccountService.bankAccountList(); 
+			for(BankAccountDto bankAccount : bankAccounts) {
+				for (int i = 0; i < 10; i++) {
+					String accountId;
+					if (bankAccount instanceof SavingBankAccountDto) {
+						accountId = ((SavingBankAccountDto) bankAccount).getId();
+					}else {
+						accountId = ((CurrentBankAccountDto) bankAccount).getId();
+					}
+					bankAccountService.credit(accountId ,
+							10000 + Math.random()*120000, "Credit");
+					bankAccountService.debit(accountId ,
+							1000 + Math.random()*12000, "Debit");
+				}
+			}			
 		};
 	}
 }

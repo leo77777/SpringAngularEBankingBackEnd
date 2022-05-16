@@ -2,6 +2,7 @@ package fr.leo.springangularebankingbackend.services;
 
 import java.util.List;
 
+import fr.leo.springangularebankingbackend.dtos.AccountOperationDTO;
 import fr.leo.springangularebankingbackend.dtos.BankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
@@ -27,4 +28,5 @@ public interface BankAccountService {
 	//Customer saveCustomer(Customer customer);
 	CustomerDTO updateCustomer(CustomerDTO customerDto);
 	void deleteCustomer(Long customerId);
+	List<AccountOperationDTO> accountHistory(String accountId);
 }

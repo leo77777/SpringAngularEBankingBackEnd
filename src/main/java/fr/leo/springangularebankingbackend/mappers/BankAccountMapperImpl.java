@@ -3,9 +3,11 @@ package fr.leo.springangularebankingbackend.mappers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import fr.leo.springangularebankingbackend.dtos.AccountOperationDTO;
 import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
 import fr.leo.springangularebankingbackend.dtos.SavingBankAccountDto;
+import fr.leo.springangularebankingbackend.entities.AccountOperation;
 import fr.leo.springangularebankingbackend.entities.CurrentAccount;
 import fr.leo.springangularebankingbackend.entities.Customer;
 import fr.leo.springangularebankingbackend.entities.SavingAccount;
@@ -69,6 +71,20 @@ public class BankAccountMapperImpl {
 		currentAccount.setCustomer(fromCustomerDTO(currentBankAccountDto.getCustomerDTO()));
 		return currentAccount;
 	}
+	
+	
+	
+	public AccountOperationDTO fromAccountOperation(AccountOperation accountOperation) {
+		AccountOperationDTO accountOperationDTO = new AccountOperationDTO();
+		BeanUtils.copyProperties(accountOperation, accountOperationDTO);
+		return accountOperationDTO;
+	}
+	
+//	public AccountOperation fromAccountOperationDTO(AccountOperationDTO accountOperationDTO) {
+//		AccountOperation accountOperation = new AccountOperation();
+//		BeanUtils.copyProperties(accountOperationDTO, accountOperation);
+//		return accountOperation;
+//	}	
 }
 
 

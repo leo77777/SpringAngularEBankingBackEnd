@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.leo.springangularebankingbackend.dtos.AccountOperationDTO;
 import fr.leo.springangularebankingbackend.dtos.BankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CustomerDTO;
@@ -132,6 +133,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 		AccountOperation accountOperation = new AccountOperation();
 		accountOperation.setType(EnumOperationType.DEBIT);
 		accountOperation.setAmount(amount);
+		accountOperation.setBankAccount(bankAccount);
 		accountOperation.setDescription(description);
 		accountOperation.setOperationDate(new Date());
 		accountOperationRepository.save(accountOperation); 
@@ -146,6 +148,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 		AccountOperation accountOperation = new AccountOperation();
 		accountOperation.setType(EnumOperationType.CREDIT);
 		accountOperation.setAmount(amount);
+		accountOperation.setBankAccount(bankAccount);
 		accountOperation.setDescription(description);
 		accountOperation.setOperationDate(new Date());
 		accountOperationRepository.save(accountOperation); 
@@ -194,6 +197,16 @@ public class BankAccountServiceImpl implements BankAccountService {
 	public void deleteCustomer(Long customerId) {
 		log.info("Deleting customer ...");
 		customerRepository.deleteById(customerId);
+	}
+		
+	@Override
+	public List<AccountOperationDTO> accountHistory(String accountId){		
+		List<AccountOperation> accountOperations
+				= accountOperationRepository.findByBankAccountId(accountId);		
+		return accountOperations
+				.stream()
+				.map(op-> dtoMapper.fromAccountOperation(op))
+				.collect(Collectors.toList());	
 	}
 	
 //	@Override
