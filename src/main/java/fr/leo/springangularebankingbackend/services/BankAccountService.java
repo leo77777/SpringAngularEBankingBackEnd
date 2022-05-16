@@ -2,6 +2,7 @@ package fr.leo.springangularebankingbackend.services;
 
 import java.util.List;
 
+import fr.leo.springangularebankingbackend.dtos.AccountHistoryDTO;
 import fr.leo.springangularebankingbackend.dtos.AccountOperationDTO;
 import fr.leo.springangularebankingbackend.dtos.BankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
@@ -29,4 +30,5 @@ public interface BankAccountService {
 	CustomerDTO updateCustomer(CustomerDTO customerDto);
 	void deleteCustomer(Long customerId);
 	List<AccountOperationDTO> accountHistory(String accountId);
+	AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
 }

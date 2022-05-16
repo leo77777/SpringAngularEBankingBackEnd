@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.leo.springangularebankingbackend.dtos.AccountHistoryDTO;
 import fr.leo.springangularebankingbackend.dtos.AccountOperationDTO;
 import fr.leo.springangularebankingbackend.dtos.BankAccountDto;
 import fr.leo.springangularebankingbackend.dtos.CurrentBankAccountDto;
@@ -207,6 +210,33 @@ public class BankAccountServiceImpl implements BankAccountService {
 				.stream()
 				.map(op-> dtoMapper.fromAccountOperation(op))
 				.collect(Collectors.toList());	
+	}
+
+	@Override
+	public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
+		
+		BankAccount bankAccount = bankAccountRepository.findById(accountId).orElse(null);
+		if (bankAccount==null) {
+			throw new BankAccountNotFoundException("Account not find");
+		}
+		Page<AccountOperation> accountOperations = accountOperationRepository
+					.findByBankAccountId(accountId,PageRequest.of(page, size));
+		
+		AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO();
+		List<AccountOperationDTO> accountOperationDTOs =
+						accountOperations.getContent()
+						.stream()
+						.map(op->dtoMapper.fromAccountOperation(op))
+						.collect(Collectors.toList());
+		// Usually => Mapper Work
+		accountHistoryDTO.setAccountOperationDTOs(accountOperationDTOs);
+		accountHistoryDTO.setAccountId(bankAccount.getId());
+		accountHistoryDTO.setBalance(bankAccount.getBalance());
+		accountHistoryDTO.setCurrentPage(page);
+		accountHistoryDTO.setTotalPages(accountOperations.getTotalPages() );
+		accountHistoryDTO.setPageSize(size);
+		// Usually => Mapper Work !
+		return accountHistoryDTO;
 	}
 	
 //	@Override
