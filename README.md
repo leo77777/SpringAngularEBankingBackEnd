@@ -3,7 +3,8 @@ Spring Boot Angular Project
 
 Swagguer-UI :
 
-![image](https://user-images.githubusercontent.com/39586770/168066797-8e9fd566-bb49-4aae-b2e1-a8597e220db6.png)
+![image](https://user-images.githubusercontent.com/39586770/168590104-d44ff7f5-ef5e-4d45-afce-e8dbbd4c8362.png)
+
 
 
 
