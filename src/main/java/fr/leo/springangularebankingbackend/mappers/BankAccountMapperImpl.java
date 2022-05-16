@@ -9,6 +9,7 @@ import fr.leo.springangularebankingbackend.dtos.SavingBankAccountDto;
 import fr.leo.springangularebankingbackend.entities.CurrentAccount;
 import fr.leo.springangularebankingbackend.entities.Customer;
 import fr.leo.springangularebankingbackend.entities.SavingAccount;
+import fr.leo.springangularebankingbackend.enums.EnumOperationType;
 
 @Service
 public class BankAccountMapperImpl {
@@ -43,6 +44,7 @@ public class BankAccountMapperImpl {
 		SavingBankAccountDto savingBankAccountDto = new SavingBankAccountDto();
 		BeanUtils.copyProperties(savingAccount, savingBankAccountDto);		
 		savingBankAccountDto.setCustomerDTO(fromCustomer(savingAccount.getCustomer()));
+		savingBankAccountDto.setType(savingAccount.getClass().getSimpleName());
 		return savingBankAccountDto;
 	}
 	
@@ -57,6 +59,7 @@ public class BankAccountMapperImpl {
 		CurrentBankAccountDto currentBankAccountDto = new CurrentBankAccountDto();
 		BeanUtils.copyProperties(currentAccount, currentBankAccountDto);
 		currentBankAccountDto.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
+		currentBankAccountDto.setType(currentAccount.getClass().getSimpleName());
 		return currentBankAccountDto;
 	}
 	
